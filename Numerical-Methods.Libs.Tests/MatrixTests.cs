@@ -153,5 +153,28 @@ namespace Numerical_Methods.Libs.Tests
 			var matrix = new Matrix(array);
 			Assert.AreEqual(array, matrix.ToArray());
 		}
-	}
+
+        [Test]
+        public void MatrixMultiplication_Test()
+        {
+            Matrix matrix1 = new Matrix(new float[,]
+                {
+                    { 1, 2 },
+                    { 3, 4 }
+                });
+            Matrix matrix2 = new Matrix(new float[,]
+                {
+                    { 2, 0 },
+                    { 1, 2 }
+                });
+
+            Matrix result = new Matrix(new float[,]
+                {
+                    { 4, 4 },
+                    { 10, 8 }
+                });
+
+            Assert.AreEqual(result, matrix1 * matrix2);
+        }
+    }
 }
