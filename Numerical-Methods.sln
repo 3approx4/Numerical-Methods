@@ -9,6 +9,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{DCCF12C9
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Numerical-Methods.Libs.Tests", "Numerical-Methods.Libs.Tests\Numerical-Methods.Libs.Tests.csproj", "{7DCF747A-75AC-4643-ABB9-E4D1C7CA8D10}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Numerical-Methods.Algorithms", "Numerical-Methods.Algorithms\Numerical-Methods.Algorithms.csproj", "{C7548E90-3FD9-47AF-A986-3AB04289ED88}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Numerical-Methods.Algorithms.Tests", "Numerical-Methods.Algorithms.Tests\Numerical-Methods.Algorithms.Tests.csproj", "{4D0FB825-2A10-4BE2-B3E7-73D23851FC9E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,9 +27,19 @@ Global
 		{7DCF747A-75AC-4643-ABB9-E4D1C7CA8D10}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7DCF747A-75AC-4643-ABB9-E4D1C7CA8D10}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7DCF747A-75AC-4643-ABB9-E4D1C7CA8D10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7548E90-3FD9-47AF-A986-3AB04289ED88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7548E90-3FD9-47AF-A986-3AB04289ED88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7548E90-3FD9-47AF-A986-3AB04289ED88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7548E90-3FD9-47AF-A986-3AB04289ED88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D0FB825-2A10-4BE2-B3E7-73D23851FC9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D0FB825-2A10-4BE2-B3E7-73D23851FC9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D0FB825-2A10-4BE2-B3E7-73D23851FC9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D0FB825-2A10-4BE2-B3E7-73D23851FC9E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{4FE01A13-62BA-433F-8361-13EACBB73718} = {4AD6FB53-227C-4ECB-B742-B7EEA885B7D4}
 		{7DCF747A-75AC-4643-ABB9-E4D1C7CA8D10} = {DCCF12C9-8BBC-4384-B498-1B3B7DCE7CD8}
+		{C7548E90-3FD9-47AF-A986-3AB04289ED88} = {4AD6FB53-227C-4ECB-B742-B7EEA885B7D4}
+		{4D0FB825-2A10-4BE2-B3E7-73D23851FC9E} = {4AD6FB53-227C-4ECB-B742-B7EEA885B7D4}
 	EndGlobalSection
 EndGlobal

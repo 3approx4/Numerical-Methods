@@ -99,7 +99,7 @@ namespace Numerical_Methods.Libs.Tests
 			var targetColumn = 2;
 			var targetValue = 5;
 			var matrix = new Matrix(matrixHeight, matrixWidth);
-			Assert.Catch<IndexOutOfRangeException>(() => matrix[targetRow, targetColumn] = targetValue, $"Value is stored in non-existing row. Available rows: {matrixHeight}, but accessed {targetRow}");
+			Assert.Catch<IndexOutOfRangeException>(() => matrix[targetColumn, targetRow] = targetValue, $"Value is stored in non-existing row. Available rows: {matrixHeight}, but accessed {targetRow}");
 		}
 
 		[Test]
@@ -111,7 +111,7 @@ namespace Numerical_Methods.Libs.Tests
 			var targetColumn = 10;
 			var targetValue = 5;
 			var matrix = new Matrix(matrixHeight, matrixWidth);
-			Assert.Catch<IndexOutOfRangeException>(() => matrix[targetRow, targetColumn] = targetValue, $"Value is stored in non-existing column. Available columns: {matrixWidth}, but accessed {targetColumn}");
+			Assert.Catch<IndexOutOfRangeException>(() => matrix[targetColumn, targetRow] = targetValue, $"Value is stored in non-existing column. Available columns: {matrixWidth}, but accessed {targetColumn}");
 		}
 
 		[Test]
@@ -175,6 +175,125 @@ namespace Numerical_Methods.Libs.Tests
                 });
 
             Assert.AreEqual(result, matrix1 * matrix2);
+        }
+
+        [Test]
+        public void GetRow_ValidIndex()
+        {
+	        int targetRowIndex = 1;
+	        
+	        Matrix matrix = new Matrix(new float[,]
+	        {
+		        { 1, 2, 3, 4 },
+		        { 5, 6, 7, 8 },
+		        { 9, 10, 11, 12 }
+	        });
+	        
+	        float[] expectedRowData = new float[]
+	        {
+		        5, 6, 7, 8
+	        };
+	        
+	        Assert.AreEqual(expectedRowData, matrix.GetRow(targetRowIndex));
+        }
+
+        [Test]
+        public void GetRowIndexWithMaxAbsValue_NegativeNumber()
+        {
+	        int expectedRowIndex = 1;
+	        int columnIndex = 0;
+	        Matrix matrix = new Matrix(new float[,]
+	        {
+		        { 1, 2, 3, 4 },
+		        { -15, 6, 7, 8 },
+		        { 9, 10, 11, 12 }
+	        });
+	        Assert.AreEqual(expectedRowIndex, matrix.GetRowIndexWithMaxAbsValue(columnIndex));
+        }
+        
+        [Test]
+        public void GetRowIndexWithMaxAbsValue_PositiveNumber()
+        {
+	        int expectedRowIndex = 2;
+	        int columnIndex = 0;
+	        Matrix matrix = new Matrix(new float[,]
+	        {
+		        { 1, 2, 3, 4 },
+		        { 5, 6, 7, 8 },
+		        { 9, 10, 11, 12 }
+	        });
+	        Assert.AreEqual(expectedRowIndex, matrix.GetRowIndexWithMaxAbsValue(columnIndex));
+        }
+
+        [Test]
+        public void GetRowIndexWithMaxAbsValue_ColumnCheck()
+        {
+	        int expectedRowIndex = 1;
+	        int columnIndex = 2;
+	        Matrix matrix = new Matrix(new float[,]
+	        {
+		        { 1, 2, 3, 4 },
+		        { 5, 11, 11, 11 },
+		        { 9, 10, 11, 12 }
+	        });
+	        Assert.AreEqual(expectedRowIndex, matrix.GetRowIndexWithMaxAbsValue(columnIndex));
+	        
+        }
+
+        [Test]
+        public void SliceMatrix_ValidIndexes()
+        {
+	        Matrix matrix = new Matrix(new float[,]
+	        {
+		        { 1, 2, 3, 4 },
+		        { 5, 11, 11, 11 },
+		        { 9, 10, 11, 12 },
+		        { 1, 2, 3, 4 },
+		        { 5, 11, 11, 11 },
+		        { 9, 10, 11, 12 },
+		        { 1, 2, 3, 4 },
+		        { 5, 11, 11, 11 },
+		        { 9, 10, 11, 12 },
+		        { 1, 2, 3, 4 },
+		        { 5, 11, 11, 11 },
+		        { 9, 10, 11, 12 },
+		        { 1, 2, 3, 4 },
+		        { 5, 11, 11, 11 },
+		        { 9, 10, 11, 12 },
+		        { 1, 2, 3, 4 },
+		        { 5, 11, 11, 11 },
+		        { 9, 10, 11, 12 }
+	        });
+	        
+	        Matrix expectedMatrix = new Matrix(new float[,]
+	        {
+		        { 1, 2, 3, 4 },
+		        { 5, 11, 11, 11 },
+		        { 9, 10, 11, 12 },
+	        });
+	        
+	        Assert.AreEqual(expectedMatrix, matrix.Slice(0, 2));
+        }
+
+        [Test]
+        public void ExcludeRow()
+        {
+	        int rowIndexToExclude = 0;
+	        Matrix matrix = new Matrix(new float[,]
+	        {
+		        { 1, 2, 3, 4 },
+		        { 5, 11, 11, 11 },
+		        { 9, 10, 11, 12 },
+	        });
+	        
+	        Matrix expectedResult = new Matrix(new float[,]
+	        {
+		        { 5, 11, 11, 11 },
+		        { 9, 10, 11, 12 },
+	        });
+	        
+	        Assert.AreEqual(expectedResult, matrix.ExcludeRow(rowIndexToExclude));
+
         }
     }
 }
