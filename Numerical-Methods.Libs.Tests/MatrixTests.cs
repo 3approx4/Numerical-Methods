@@ -272,7 +272,7 @@ namespace Numerical_Methods.Libs.Tests
 		        { 9, 10, 11, 12 },
 	        });
 	        
-	        Assert.AreEqual(expectedMatrix, matrix.Slice(0, 2));
+	        Assert.AreEqual(expectedMatrix, matrix.RowSlice(0, 2));
         }
 
         [Test]

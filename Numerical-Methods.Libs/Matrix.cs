@@ -51,6 +51,17 @@ namespace Numerical_Methods.Libs
         }
 
         /// <summary>
+        /// Get and sets matrix row
+        /// </summary>
+        /// <param name="y">Vartical position</param>
+        /// <returns></returns>
+        public float[] this[int y]
+        {
+            get => GetRow(y);
+            set => WriteRow(value, y);
+        }
+
+        /// <summary>
         /// Matrix height - vertical (column) length
         /// </summary>
         public int Height => matrix.GetLength(0);
@@ -105,7 +116,7 @@ namespace Numerical_Methods.Libs
         /// <param name="row">Array of new values to be written</param>
         /// <param name="verticalOffset">Updated row index</param>
         /// <exception cref="Exception"></exception>
-        public void Write(float[] row, int verticalOffset = 0)
+        public void WriteRow(float[] row, int verticalOffset = 0)
         {
             if(row.Length > Width ||
                verticalOffset > Height)
@@ -129,8 +140,7 @@ namespace Numerical_Methods.Libs
             float[,] oldMatrix = matrix;
             matrix = new float[Height + 1, Width];
             Write(oldMatrix);
-            for (var i = 0; i < row.Length; i++)
-                matrix[Height - 1 , i] = row[i];
+            this[Height - 1] = row;
         }
 
         /// <summary>
@@ -163,10 +173,12 @@ namespace Numerical_Methods.Libs
         /// <returns>Array of the row elements</returns>
         public float[] GetRow(int index)
         {
-            if (index > Height || index < 0) throw new IndexOutOfRangeException("No row with such index available");
+            if (index > Height || index < 0)
+                throw new IndexOutOfRangeException("No row with such index available");
+            
             float[] row = new float[Width];
-            int offset = index * Width * sizeof(float);
-            Buffer.BlockCopy(matrix, offset, row, 0, Width*sizeof(float));
+            for (int i = 0; i < Width; i++)
+                row[i] = matrix[index, i];
             return row;
         }
 
@@ -178,7 +190,9 @@ namespace Numerical_Methods.Libs
         /// <returns></returns>
         public int GetRowIndexWithMaxAbsValue(int columnIndex)
         {
-            if (columnIndex > Width || columnIndex < 0) throw new IndexOutOfRangeException("No row with such index available");
+            if (columnIndex > Width || columnIndex < 0)
+                throw new IndexOutOfRangeException("No row with such index available");
+            
             int maxElementRow = 0;
             for (int i = 0; i < Height; i++)
             {
@@ -193,14 +207,12 @@ namespace Numerical_Methods.Libs
         /// <param name="startIndex">Starting row</param>
         /// <param name="endIndex">Ending row</param>
         /// <returns>Matrix with the same width than the sliced and with row count of endIndex-startIndex</returns>
-        public Matrix Slice(int startIndex, int endIndex)
+        public Matrix RowSlice(int startIndex, int endIndex)
         {
-            Matrix result = new Matrix(0, Width);
-            
-            for (int i = startIndex; i <= endIndex; i++)
-            {
-                result.PushRow(GetRow(i));
-            }
+            Matrix result = new Matrix(endIndex - startIndex + 1, Width);
+
+            for (int i = 0; i <= (endIndex - startIndex); i++)
+                result[i] = this[i + startIndex];
 
             return result;
         }
@@ -213,8 +225,8 @@ namespace Numerical_Methods.Libs
         public Matrix ExcludeRow(int index)
         {
             Matrix result = new Matrix(Height - 1, Width);
-            result.Write(Slice(0, index));
-            result.Write(Slice(index + 1, Height - 1), index);
+            result.Write(RowSlice(0, index));
+            result.Write(RowSlice(index + 1, Height - 1), index);
             return result;
         }
 
@@ -228,9 +240,7 @@ namespace Numerical_Methods.Libs
         {
             float[] row = GetRow(rowIndex);
             for (int i = 0; i < Width; i++)
-            {
                 row[i] *= value;
-            }
             return row;
         }
 

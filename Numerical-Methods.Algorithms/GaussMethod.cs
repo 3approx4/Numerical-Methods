@@ -47,7 +47,7 @@ namespace Numerical_Methods.Algorithms
                     {
                         targetRow[k] += row[k];
                     }
-                    orderedMatrixA.Write( targetRow, i);
+                    orderedMatrixA.WriteRow( targetRow, i);
                 
                     // Recalculate the free coefficient for i-th row
                     row = orderedMatrixB.MultiplyRow(i, c);
@@ -56,13 +56,13 @@ namespace Numerical_Methods.Algorithms
                     {
                         targetRow[k] += row[k];
                     }
-                    orderedMatrixB.Write( targetRow, i);
+                    orderedMatrixB.WriteRow( targetRow, i);
                 }
             }
             
             Matrix result = new Matrix(aMatrix.Height, bMatrix.Width);
             // Backward Step
-            result.Write(new []
+            result.WriteRow(new []
                 {
                     orderedMatrixB.GetRow(aMatrix.Height - 1)[0] / orderedMatrixA.GetRow(aMatrix.Height - 1)[aMatrix.Width - 1]
                 }, aMatrix.Height - 1);
@@ -70,8 +70,8 @@ namespace Numerical_Methods.Algorithms
             {
                 float[] row = orderedMatrixB.GetRow(i);
                 row[0] -= result.GetRow(i + 1)[0] * orderedMatrixB.GetRow(i + 1)[0];
-                orderedMatrixB.Write(row, i);
-                result.Write(new float[]
+                orderedMatrixB.WriteRow(row, i);
+                result.WriteRow(new float[]
                 {
                     row[0]/orderedMatrixB.GetRow(i + 1)[0]
                 }, i);
