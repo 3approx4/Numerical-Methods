@@ -264,6 +264,25 @@ namespace Numerical_Methods.Libs
         }
 
         /// <summary>
+        /// Matrix value by value approximately check
+        /// </summary>
+        /// <param name="compareMatrix">Other matrix</param>
+        /// <param name="delta">Epsilon/param>
+        /// <returns></returns>
+        public bool NearEquals(Matrix compareMatrix, float delta = 0.0001f)
+        {
+            if (compareMatrix == null ||
+                Width != compareMatrix.Width ||
+                Height != compareMatrix.Height)
+                return false;
+            for (int y = 0; y < Height; y++)
+                for (int x = 0; x < Width; x++)
+                    if (Math.Abs(matrix[y, x] - compareMatrix[y, x]) > delta)
+                        return false;
+            return true;
+        }
+
+        /// <summary>
         /// Get hash code of matrix:
         /// Sum of all matrix value hashes
         /// </summary>

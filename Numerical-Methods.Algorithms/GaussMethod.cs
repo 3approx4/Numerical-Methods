@@ -14,68 +14,57 @@ namespace Numerical_Methods.Algorithms
         /// <returns>Vector of variable values which are the solution</returns>
         public static Matrix Solve(Matrix aMatrix, Matrix bMatrix)
         {
-            Matrix orderedMatrixA = new Matrix(0, aMatrix.Width);
-            Matrix orderedMatrixB = new Matrix(0, bMatrix.Width);
-            for (int j = 0; j < aMatrix.Width; j++)
-            {
-                // Forward Step
-                int maxElementRow = aMatrix.GetRowIndexWithMaxAbsValue(j);
-            
-                orderedMatrixA = new Matrix(0, aMatrix.Width);
-                orderedMatrixA.PushRow(aMatrix.GetRow(maxElementRow));
-                orderedMatrixB = new Matrix(0, bMatrix.Width);
-                orderedMatrixB.PushRow(bMatrix.GetRow(maxElementRow));
-                // todo Replace the code below with the ExcludeRow calls after push
-                for (int i = 0; i < aMatrix.Height; i++)
+            Matrix result = new Matrix(3, 1);
+
+            // 1. Forward Gauss
+            for (int i = 0; i < aMatrix.Height; i++)
+            { 
+                // Currecnt line
+                var m = i;
+
+                for (int l = i; l < aMatrix.Height; l++)
+                    if (Math.Abs(aMatrix[m, i]) < Math.Abs(aMatrix[l, i]))
+                        m = l;
+
+                if (m != i)
                 {
-                    if (i != maxElementRow)
+                    float tmp;
+
+                    for (int s = 0; s < aMatrix.Width; s++)
                     {
-                        orderedMatrixA.PushRow(aMatrix.GetRow(i));
-                        orderedMatrixB.PushRow(bMatrix.GetRow(i));
+                        tmp = aMatrix[i, s];
+                        aMatrix[i, s] = aMatrix[m, s];
+                        aMatrix[m, s] = tmp;
+                    }
+
+                    tmp = bMatrix[i, 0];
+                    bMatrix[i, 0] = bMatrix[m, 0];
+                    bMatrix[m, 0] = tmp;
+                }
+
+
+                for (int k = 0; k < i; k++)
+                {
+                    bMatrix[i, 0] -= bMatrix[k, 0] * (aMatrix[i, k] / aMatrix[k, k]);
+                    for (int j = aMatrix.Width - 1; j >= 0; j--)
+                    {
+                        aMatrix[i, j] -= aMatrix[k, j] * (aMatrix[i, k] / aMatrix[k, k]);
                     }
                 }
 
-                for (int i = 1; i < orderedMatrixA.Height; i++)
-                {
-                    // Calculate the value for each row to get rid of j-th coefficient and free the j-th variable
-                    float c = -orderedMatrixA[j, j] / orderedMatrixA[i, j];
-                
-                    // Perform removal of the j-th variable in i-th row
-                    float[] row = orderedMatrixA.MultiplyRow(i, c);
-                    float[] targetRow = orderedMatrixA.GetRow(j);
-                    for (int k = 0; k < targetRow.Length; k++)
-                    {
-                        targetRow[k] += row[k];
-                    }
-                    orderedMatrixA.WriteRow( targetRow, i);
-                
-                    // Recalculate the free coefficient for i-th row
-                    row = orderedMatrixB.MultiplyRow(i, c);
-                    targetRow = orderedMatrixB.GetRow(j);
-                    for (int k = 0; k < targetRow.Length; k++)
-                    {
-                        targetRow[k] += row[k];
-                    }
-                    orderedMatrixB.WriteRow( targetRow, i);
-                }
             }
-            
-            Matrix result = new Matrix(aMatrix.Height, bMatrix.Width);
-            // Backward Step
-            result.WriteRow(new []
-                {
-                    orderedMatrixB.GetRow(aMatrix.Height - 1)[0] / orderedMatrixA.GetRow(aMatrix.Height - 1)[aMatrix.Width - 1]
-                }, aMatrix.Height - 1);
-            for (int i = aMatrix.Height - 2; i >= 0; i--)
+
+            // 2. Reverse Gauss
+            for (int i = aMatrix.Height - 1; i >= 0; i--)
             {
-                float[] row = orderedMatrixB.GetRow(i);
-                row[0] -= result.GetRow(i + 1)[0] * orderedMatrixB.GetRow(i + 1)[0];
-                orderedMatrixB.WriteRow(row, i);
-                result.WriteRow(new float[]
+                result[i, 0] = bMatrix[i, 0] / aMatrix[i, i];
+                for (int xi = aMatrix.Height - 1; xi > i; xi--)
                 {
-                    row[0]/orderedMatrixB.GetRow(i + 1)[0]
-                }, i);
+                    result[i, 0] -= ((aMatrix[i, xi] * result[xi, 0]) / aMatrix[i, i]);
+                }
+                Console.WriteLine(string.Format(" x{0} = {1}", i + 1, result[i]));
             }
+
             return result;
         }
     }

@@ -35,7 +35,8 @@ namespace Numerical_Methods.Algorithms.Tests
 
             Matrix result = GaussMethod.Solve(variableCoefficients, freeCoefficients);
 
-            Assert.AreEqual(expectedResult, result, "Matrix are not equal");
+            Assert.True(expectedResult.NearEquals(result), "Matrix are not equal:\nExpected:{0}\nResult:{1}",
+                expectedResult.ToString(), result.ToString());
         }
     }
 }
