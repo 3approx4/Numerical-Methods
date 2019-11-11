@@ -66,7 +66,7 @@ namespace Numerical_Methods.Libs.Tests
 		}
 
 		[Test]
-		public void IsZeroMatrixSquare_Test()
+		public void IsZeroMatrixSquareTest()
 		{
 			var matrixHeight = 0;
 			var matrixWidth = 0;
@@ -75,7 +75,7 @@ namespace Numerical_Methods.Libs.Tests
 		}
 
 		[Test]
-		public void GetMatrixValue_Test()
+		public void GetMatrixValueTest()
 		{
 			var matrixHeight = 4;
 			var matrixWidth = 3;
@@ -91,7 +91,7 @@ namespace Numerical_Methods.Libs.Tests
 		}
 
 		[Test]
-		public void StoreValueOutOfRowRange_Test()
+		public void StoreValueOutOfRowRangeTest()
 		{
 			var matrixHeight = 4;
 			var matrixWidth = 3;
@@ -103,7 +103,7 @@ namespace Numerical_Methods.Libs.Tests
 		}
 
 		[Test]
-		public void StoreValueOutOfColumnRange_Test()
+		public void StoreValueOutOfColumnRangeTest()
 		{
 			var matrixHeight = 4;
 			var matrixWidth = 3;
@@ -115,7 +115,7 @@ namespace Numerical_Methods.Libs.Tests
 		}
 
 		[Test]
-		public void StoreValueOutOfAllRanges_Test()
+		public void StoreValueOutOfAllRangesTest()
 		{
 			var matrixHeight = 4;
 			var matrixWidth = 3;
@@ -127,7 +127,7 @@ namespace Numerical_Methods.Libs.Tests
 		}
 
 		[Test]
-		public void ConvertMatrixToArray_Test()
+		public void ConvertMatrixToArrayTest()
 		{
 			var array = new float[,]
 			{
@@ -141,7 +141,7 @@ namespace Numerical_Methods.Libs.Tests
 		}
 
 		[Test]
-		public void CreateMatrixFromArray_Test()
+		public void CreateMatrixFromArrayTest()
 		{
 			var array = new float[,]
 			{
@@ -155,7 +155,7 @@ namespace Numerical_Methods.Libs.Tests
 		}
 
         [Test]
-        public void MatrixMultiplication_Test()
+        public void MatrixMultiplicationTest()
         {
             Matrix matrix1 = new Matrix(new float[,]
                 {
@@ -178,7 +178,7 @@ namespace Numerical_Methods.Libs.Tests
         }
 
         [Test]
-        public void GetRow_ValidIndex()
+        public void GetRowValidIndexTest()
         {
 	        int targetRowIndex = 1;
 	        
@@ -198,7 +198,7 @@ namespace Numerical_Methods.Libs.Tests
         }
 
         [Test]
-        public void GetRowIndexWithMaxAbsValue_NegativeNumber()
+        public void GetRowIndexWithMaxAbsValueNegativeNumberTest()
         {
 	        int expectedRowIndex = 1;
 	        int columnIndex = 0;
@@ -212,7 +212,7 @@ namespace Numerical_Methods.Libs.Tests
         }
         
         [Test]
-        public void GetRowIndexWithMaxAbsValue_PositiveNumber()
+        public void GetRowIndexWithMaxAbsValuePositiveNumberTest()
         {
 	        int expectedRowIndex = 2;
 	        int columnIndex = 0;
@@ -226,7 +226,7 @@ namespace Numerical_Methods.Libs.Tests
         }
 
         [Test]
-        public void GetRowIndexWithMaxAbsValue_ColumnCheck()
+        public void GetRowIndexWithMaxAbsValueColumnCheckTest()
         {
 	        int expectedRowIndex = 1;
 	        int columnIndex = 2;
@@ -241,7 +241,7 @@ namespace Numerical_Methods.Libs.Tests
         }
 
         [Test]
-        public void SliceMatrix_ValidIndexes()
+        public void SliceMatrixValidIndexesTest()
         {
 	        Matrix matrix = new Matrix(new float[,]
 	        {
@@ -276,7 +276,7 @@ namespace Numerical_Methods.Libs.Tests
         }
 
         [Test]
-        public void ExcludeRow()
+        public void ExcludeRowTest()
         {
 	        int rowIndexToExclude = 0;
 	        Matrix matrix = new Matrix(new float[,]

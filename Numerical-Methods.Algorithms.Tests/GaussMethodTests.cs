@@ -11,7 +11,7 @@ namespace Numerical_Methods.Algorithms.Tests
         }
 
         [Test]
-        public void GaussMethod_Test()
+        public void GaussMethodTest()
         {
             // Currently used for debug purposes
             Matrix variableCoefficients = new Matrix(new float[,]
