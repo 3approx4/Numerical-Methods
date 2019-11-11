@@ -276,5 +276,25 @@ namespace Numerical_Methods.Libs
                     sum += matrix[y, x].GetHashCode();
             return sum;
         }
+
+        /// <summary>
+        /// To string override
+        /// </summary>
+        /// <returns>Matrix as string</returns>
+        public override string ToString()
+        {
+            string mString = "[\n";
+            for (int y = 0; y < Height; y++)
+            {
+                mString += " { ";
+                for (int x = 0; x < Width; x++)
+                {
+                    mString += this[y, x] + " ";
+                }
+                mString += "}\n";
+            }
+            mString += "]";
+            return mString;
+        }
     }
 }

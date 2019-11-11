@@ -26,8 +26,16 @@ namespace Numerical_Methods.Algorithms.Tests
                 { -1 },
                 { -2 }
             });
+
+            Matrix expectedResult = new Matrix(new float[,] {
+                { 25f / 26f },
+                { 7f / 26f },
+                { 41f / 26f }
+            });
+
             Matrix result = GaussMethod.Solve(variableCoefficients, freeCoefficients);
-            Assert.Pass();
+
+            Assert.AreEqual(expectedResult, result, "Matrix are not equal");
         }
     }
 }
