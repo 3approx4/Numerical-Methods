@@ -62,7 +62,6 @@ namespace Numerical_Methods.Algorithms
                 {
                     result[i, 0] -= ((aMatrix[i, xi] * result[xi, 0]) / aMatrix[i, i]);
                 }
-                Console.WriteLine(string.Format(" x{0} = {1}", i + 1, result[i]));
             }
 
             return result;
