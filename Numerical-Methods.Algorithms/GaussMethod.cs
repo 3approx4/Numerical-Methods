@@ -14,32 +14,18 @@ namespace Numerical_Methods.Algorithms
         /// <returns>Vector of variable values which are the solution</returns>
         public static Matrix Solve(Matrix aMatrix, Matrix bMatrix)
         {
-            Matrix result = new Matrix(3, 1);
+            Matrix result = new Matrix(bMatrix.ToArray());
 
             // 1. Forward Gauss
             for (int i = 0; i < aMatrix.Height; i++)
             { 
-                // Currecnt line
-                var m = i;
-
-                for (int l = i; l < aMatrix.Height; l++)
-                    if (Math.Abs(aMatrix[m, i]) < Math.Abs(aMatrix[l, i]))
-                        m = l;
+                // Current line
+                var m = aMatrix.GetRowIndexWithMaxAbsValue(i);
 
                 if (m != i)
                 {
-                    float tmp;
-
-                    for (int s = 0; s < aMatrix.Width; s++)
-                    {
-                        tmp = aMatrix[i, s];
-                        aMatrix[i, s] = aMatrix[m, s];
-                        aMatrix[m, s] = tmp;
-                    }
-
-                    tmp = bMatrix[i, 0];
-                    bMatrix[i, 0] = bMatrix[m, 0];
-                    bMatrix[m, 0] = tmp;
+                    aMatrix.SwapRow(i, m);
+                    bMatrix.SwapRow(i, m);
                 }
 
 
@@ -51,16 +37,24 @@ namespace Numerical_Methods.Algorithms
                         aMatrix[i, j] -= aMatrix[k, j] * (aMatrix[i, k] / aMatrix[k, k]);
                     }
                 }
-
             }
-
+            // Normalizing the matrices in order to the 1 for each X[i, i]
+            for (int i = 0; i < aMatrix.Height; i++)
+            {
+                bMatrix[i, 0] /= aMatrix[i, i];
+                aMatrix.NormalizeRow(i);
+            }
+            // Currently is not working for the Last two equations. We have the final results already before the reverse steps
             // 2. Reverse Gauss
             for (int i = aMatrix.Height - 1; i >= 0; i--)
             {
-                result[i, 0] = bMatrix[i, 0] / aMatrix[i, i];
-                for (int xi = aMatrix.Height - 1; xi > i; xi--)
+                if(i == aMatrix.Height - 1)
+                    result[i, 0] /= aMatrix[i, i];
+                for (int xi = aMatrix.Width - 1; xi > i; xi--)
                 {
-                    result[i, 0] -= ((aMatrix[i, xi] * result[xi, 0]) / aMatrix[i, i]);
+                    bMatrix[i, 0] -= aMatrix[i, xi] * result[xi, 0];
+                    bMatrix[i, 0] /= aMatrix[i, i];
+                    result[i, 0] = bMatrix[i, 0];
                 }
             }
 

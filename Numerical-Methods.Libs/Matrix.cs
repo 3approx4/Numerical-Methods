@@ -245,6 +245,51 @@ namespace Numerical_Methods.Libs
         }
 
         /// <summary>
+        /// Swap the rows inside the matrix
+        /// </summary>
+        /// <param name="firstRow">First row to swap</param>
+        /// <param name="secondRow">Second row to swap</param>
+        public void SwapRow(int firstRow, int secondRow)
+        {
+            float[] tmp = this[firstRow];
+            this[firstRow] = this[secondRow];
+            this[secondRow] = tmp;
+        }
+
+        /// <summary>
+        /// Normalize the row, by dividing it with the leading variables' coefficient
+        /// </summary>
+        /// <param name="rowNumber">Number of row to normalize</param>
+        public void NormalizeRow(int rowNumber)
+        {
+            float divider = this[rowNumber, rowNumber];
+            for (int i = 0; i < Width; i++)
+            {
+                this[rowNumber, i] /= divider;
+            }
+        }
+
+        /// <summary>
+        /// Get the maximal distance between the matrices
+        /// </summary>
+        /// <param name="compareMatrix">Matrix for comparison</param>
+        /// <returns>Maximal absolute distance</returns>
+        public float MaxDelta(Matrix compareMatrix)
+        {
+            if (compareMatrix == null ||
+                Width != compareMatrix.Width ||
+                Height != compareMatrix.Height) return float.NaN;
+            float maxDelta = Math.Abs(this[0, 0] - compareMatrix[0, 0]);
+            for (int i = 1; i < Height; i++)
+            {
+                float newDelta = Math.Abs(this[i, 0] - compareMatrix[i, 0]);
+                maxDelta = newDelta > maxDelta ? newDelta : maxDelta;
+            }
+
+            return maxDelta;
+        }
+        
+        /// <summary>
         /// Matrix value by value check
         /// </summary>
         /// <param name="obj">Other matrix object</param>
@@ -267,7 +312,7 @@ namespace Numerical_Methods.Libs
         /// Matrix value by value approximately check
         /// </summary>
         /// <param name="compareMatrix">Other matrix</param>
-        /// <param name="delta">Epsilon/param>
+        /// <param name="delta">Epsilon</param>
         /// <returns></returns>
         public bool NearEquals(Matrix compareMatrix, float delta = 0.0001f)
         {
