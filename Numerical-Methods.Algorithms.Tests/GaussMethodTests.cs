@@ -18,7 +18,7 @@ namespace Numerical_Methods.Algorithms.Tests
             {
                 { 1, -2, 1 },
                 { 2, -5, -1 },
-                { -7, 0, 3}
+                { -7, 0, 1 }
             });
             Matrix freeCoefficients = new Matrix(new float[,]
             {
@@ -28,9 +28,9 @@ namespace Numerical_Methods.Algorithms.Tests
             });
 
             Matrix expectedResult = new Matrix(new float[,] {
-                { 25f / 26f },
-                { 7f / 26f },
-                { 41f / 26f }
+                { 13f / 25f },
+                { 2f / 25f },
+                { 41f / 25f }
             });
 
             Matrix result = GaussMethod.Solve(variableCoefficients, freeCoefficients);
@@ -58,8 +58,8 @@ namespace Numerical_Methods.Algorithms.Tests
 
             Matrix expectedResult = new Matrix(new float[,]
             {
-                { 5f / 2f },
-                { 9f / 7f },
+                { 61f / 16f },
+                { 27f / 16f },
                 { 15f / 16f }
             });
 
@@ -88,8 +88,8 @@ namespace Numerical_Methods.Algorithms.Tests
 
             Matrix expectedResult = new Matrix(new float[,]
             {
-                { 15f / 4f },
-                { 90f / 37f },
+                { 3f },
+                { 3f },
                 { -3f }
             });
 
