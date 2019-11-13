@@ -118,7 +118,7 @@ namespace Numerical_Methods.Libs
         /// <exception cref="Exception"></exception>
         public void WriteRow(float[] row, int verticalOffset = 0)
         {
-            if(row.Length > Width ||
+            if (row.Length > Width ||
                verticalOffset > Height)
                 throw new Exception("Can't write matrix, it does not fit the row");
 
@@ -175,7 +175,7 @@ namespace Numerical_Methods.Libs
         {
             if (index > Height || index < 0)
                 throw new IndexOutOfRangeException("No row with such index available");
-            
+
             float[] row = new float[Width];
             for (int i = 0; i < Width; i++)
                 row[i] = matrix[index, i];
@@ -192,7 +192,7 @@ namespace Numerical_Methods.Libs
         {
             if (columnIndex > Width || columnIndex < 0)
                 throw new IndexOutOfRangeException("No row with such index available");
-            
+
             int maxElementRow = 0;
             for (int i = 0; i < Height; i++)
             {
@@ -288,7 +288,26 @@ namespace Numerical_Methods.Libs
 
             return maxDelta;
         }
-        
+
+        /// <summary>
+        /// Get Manhattan distance value of matrix
+        /// </summary>
+        /// <returns>Manhattan distance value of matrix</returns>
+        public float GetManhattanDistance()
+        {
+            float maxNorma = float.MinValue;
+            for (int x = 0; x < Width; x++)
+            {
+                float localMax = 0;
+                for (int y = 0; y < Height; y++)
+                    localMax += this[y, x];
+                if (localMax > maxNorma)
+                    maxNorma = localMax;
+            }
+
+            return maxNorma;
+        }
+
         /// <summary>
         /// Matrix value by value check
         /// </summary>
