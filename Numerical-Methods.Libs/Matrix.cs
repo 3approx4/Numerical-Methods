@@ -279,14 +279,66 @@ namespace Numerical_Methods.Libs
             if (compareMatrix == null ||
                 Width != compareMatrix.Width ||
                 Height != compareMatrix.Height) return float.NaN;
-            float maxDelta = Math.Abs(this[0, 0] - compareMatrix[0, 0]);
-            for (int i = 1; i < Height; i++)
+            float maxDelta = 0;
+            for (int i = 0; i < Height; i++)
             {
                 float newDelta = Math.Abs(this[i, 0] - compareMatrix[i, 0]);
                 maxDelta = newDelta > maxDelta ? newDelta : maxDelta;
             }
 
             return maxDelta;
+        }
+
+        /// <summary>
+        /// Calculate the row value using the specified x values from xValues
+        /// </summary>
+        /// <param name="rowIndex">Number of row, where to substitute x with xValues</param>
+        /// <param name="xValues">X values to use</param>
+        /// <param name="bMatrix">Left part values</param>
+        /// <returns>b - ai1*x1 - ai2*x2 - ai3*x3 ...</returns>
+        public float CombineValues(int rowIndex, Matrix xValues, Matrix bMatrix)
+        {
+            float result = bMatrix[rowIndex, 0];
+            for (int i = 0; i < xValues.Height; i++)
+            {
+                if(i != rowIndex)
+                    result -= this[rowIndex, i] * xValues[i, 0];
+            }
+            result /= this[rowIndex, rowIndex];
+            return result;
+        }
+
+        /// <summary>
+        /// Check for the |A[i, i]| >= sum(j!=i)|Aij|  
+        /// </summary>
+        /// <returns>True, if A[i, i] is GoE than other elements</returns>
+        public bool IsDiagonallyDominant()
+        {
+            bool dominant = true;
+            for (int i = 0; i < Height; i++)
+            {
+                dominant &= CheckRowDominance(i);
+            }
+
+            return dominant;
+        }
+        
+        /// <summary>
+        /// Check row for the dominance of the rowIndex located value
+        /// </summary>
+        /// <param name="rowIndex">Row number</param>
+        /// <returns>True, if A[i, i] is GoE than other elements in the row</returns>
+        private bool CheckRowDominance(int rowIndex)
+        {
+            float diagValue = Math.Abs(this[rowIndex, rowIndex]);
+            float sum = 0;
+            for (int j = 0; j < this.Width; j++)
+            {
+                if (j != rowIndex)
+                    sum += Math.Abs(this[rowIndex, j]);
+            }
+
+            return diagValue >= sum;
         }
         
         /// <summary>
@@ -359,6 +411,22 @@ namespace Numerical_Methods.Libs
             }
             mString += "]";
             return mString;
+        }
+
+        /// <summary>
+        /// Get clone of an existing matrix
+        /// </summary>
+        /// <param name="otherMatrix">Matrix to clone</param>
+        /// <returns>New matrix with same values</returns>
+        public static Matrix Clone(Matrix otherMatrix)
+        {
+            var newMatrix = new Matrix(otherMatrix.Height, otherMatrix.Width);
+            for (int j = 0; j < otherMatrix.Height; j++)
+            {
+                newMatrix[j] = (float[]) otherMatrix[j].Clone();
+            }
+
+            return newMatrix;
         }
     }
 }

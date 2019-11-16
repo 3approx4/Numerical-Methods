@@ -295,5 +295,31 @@ namespace Numerical_Methods.Libs.Tests
 	        Assert.AreEqual(expectedResult, matrix.ExcludeRow(rowIndexToExclude));
 
         }
+
+        [Test]
+        public void CombineRowWithValuesTest()
+        {
+	        int rowIndex = 0;
+	        var aMatrix = new Matrix(new float[,]
+	        {
+		        { 1, 2, 3 }
+	        });
+	        var bMatrix = new Matrix(new float[,]
+	        {
+		        { 5 }
+	        });
+	        var xValues = new Matrix(new float[,]
+	        {
+		        { 0.5f },
+		        { 1 },
+		        { 3 }
+	        });
+	        var expectedResult = 5 - 0.5f - 2 - 9;
+
+	        var actualResult = aMatrix.CombineValues(0, xValues, bMatrix);
+	        
+	        Assert.AreEqual(expectedResult, actualResult, 
+		        $"Values are not equal:\nExpected{expectedResult}\nActual:{actualResult}");
+        }
     }
 }

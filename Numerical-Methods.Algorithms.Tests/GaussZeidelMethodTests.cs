@@ -4,12 +4,11 @@ using NUnit.Framework;
 namespace Numerical_Methods.Algorithms.Tests
 {
     [TestFixture]
-    public class RelaxationMethodTests
+    public class GaussZeidelMethodTests
     {
         [SetUp]
         public void Setup()
         {
-            
         }
 
         [Test]
@@ -36,9 +35,7 @@ namespace Numerical_Methods.Algorithms.Tests
 
             float epsilon = 0.0001f;
 
-            float relaxationWeight = 0.8f;
-
-            Matrix result = RelaxationMethod.Solve(variableCoefficients, freeCoefficients, epsilon, relaxationWeight);
+            Matrix result = GaussZeidelMethod.Solve(variableCoefficients, freeCoefficients, epsilon);
 
             Assert.True(expectedResult.NearEquals(result), "Matrix are not equal:\nExpected:{0}\nResult:{1}",
                 expectedResult.ToString(), result.ToString());
@@ -70,9 +67,7 @@ namespace Numerical_Methods.Algorithms.Tests
 
             float epsilon = 0.0001f;
 
-            float relaxationWeight = 0.8f;
-
-            Matrix result = RelaxationMethod.Solve(variableCoefficients, freeCoefficients, epsilon, relaxationWeight);
+            Matrix result = GaussZeidelMethod.Solve(variableCoefficients, freeCoefficients, epsilon);
             
             Assert.True(expectedResult.NearEquals(result), "Matrices are not equal:\nExpected:{0}\nResult:{1}",
                 expectedResult.ToString(), result.ToString());
@@ -104,9 +99,7 @@ namespace Numerical_Methods.Algorithms.Tests
 
             float epsilon = 0.0001f;
 
-            float relaxationWeight = 0.8f;
-
-            Matrix result = RelaxationMethod.Solve(variableCoefficients, freeCoefficients, epsilon, relaxationWeight);
+            Matrix result = GaussZeidelMethod.Solve(variableCoefficients, freeCoefficients, epsilon);
             
             Assert.True(expectedResult.NearEquals(result), "Matrices are not equal:\nExpected:{0}\nResult:{1}",
                 expectedResult.ToString(), result.ToString());

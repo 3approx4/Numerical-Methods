@@ -1,32 +1,40 @@
+using System;
 using Numerical_Methods.Libs;
 
 namespace Numerical_Methods.Algorithms
 {
     public class RelaxationMethod
     {
-        public static Matrix Solve(Matrix aMatrix, Matrix bMatrix, float relaxation = 0.9f, int iterations = 5)
+        public static Matrix Solve(Matrix aMatrix, Matrix bMatrix, float epsilon, float relaxationWeight = 1)
         {
-            int i, j, n = aMatrix.Height;
+            // Check if the result is reachable during next iterations ( matrix is diagonally dominant )
+            if (!aMatrix.IsDiagonallyDominant())
+                throw new Exception("Matrix is not diagonally dominant!");
+            // Result of previous iteration
+            Matrix prevX = new Matrix(bMatrix.Height, bMatrix.Width);
+            // Result of current iteration
+            Matrix currX = new Matrix(bMatrix.Height, bMatrix.Width);
 
-            Matrix x = bMatrix;
-            float delta;
-
-            // Gauss-Seidel with Successive OverRelaxation Solver
-            for (int k = 0; k < iterations; ++k)
+            // Start from maximal delta value possible
+            float maxDelta = float.MaxValue;
+            do
             {
-                for (i = 0; i < n; ++i)
+                // Calculate each X value
+                for (int i = 0; i < bMatrix.Height; i++)
                 {
-                    delta = 0.0f;
-
-                    for (j = 0;   j < i; ++j) delta += aMatrix[i,j]*x[j,0 ];
-                    for (j = i + 1; j < n; ++j) delta += aMatrix[i, j]*x[j, 0];
-
-                    delta = (bMatrix[i, 0] - delta) / aMatrix[i, i];
-                    x[i, 0] += relaxation * (delta - x[i, 0]);
+                    // Calculate x based on the row values and x values from previous iteration
+                    currX[i, 0] = relaxationWeight * aMatrix.CombineValues(i, currX, bMatrix) + (1 - relaxationWeight) * prevX[i, 0];
                 }
-            }
 
-            return x;
+                // Calculate current distance between iteration results
+                maxDelta = currX.MaxDelta(prevX);
+
+                // Store the current iteration results as the previous iteration results
+                prevX = Matrix.Clone(currX); // fix of having multiple references to single object
+            } while (maxDelta > epsilon); // Iterate until the required precision is reached
+
+            // return the value of the last iteration
+            return prevX;
         }
     }
 }
