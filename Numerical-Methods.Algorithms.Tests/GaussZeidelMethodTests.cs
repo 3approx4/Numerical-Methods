@@ -1,3 +1,4 @@
+using System;
 using Numerical_Methods.Libs;
 using NUnit.Framework;
 
@@ -26,19 +27,10 @@ namespace Numerical_Methods.Algorithms.Tests
                 { -1 },
                 { -2 }
             });
-
-            Matrix expectedResult = new Matrix(new float[,] {
-                { 13f / 25f },
-                { 2f / 25f },
-                { 41f / 25f }
-            });
-
+            
             float epsilon = 0.0001f;
 
-            Matrix result = GaussZeidelMethod.Solve(variableCoefficients, freeCoefficients, epsilon);
-
-            Assert.True(expectedResult.NearEquals(result), "Matrix are not equal:\nExpected:{0}\nResult:{1}",
-                expectedResult.ToString(), result.ToString());
+            Assert.Catch<Exception>(() => GaussZeidelMethod.Solve(variableCoefficients, freeCoefficients, epsilon));
         }
         
         [Test]

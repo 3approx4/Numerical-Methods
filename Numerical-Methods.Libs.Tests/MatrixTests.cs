@@ -314,9 +314,10 @@ namespace Numerical_Methods.Libs.Tests
 		        { 1 },
 		        { 3 }
 	        });
-	        var expectedResult = 5 - 0.5f - 2 - 9;
+	        // (b - a2 * x2 - a3 * x3) / a1
+	        float expectedResult = (5f - 2 * 1 - 3 * 3) / 1.0f;
 
-	        var actualResult = aMatrix.CombineValues(0, xValues, bMatrix);
+	        var actualResult = aMatrix.CombineValues(rowIndex, xValues, bMatrix);
 	        
 	        Assert.AreEqual(expectedResult, actualResult, 
 		        $"Values are not equal:\nExpected{expectedResult}\nActual:{actualResult}");
