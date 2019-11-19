@@ -33,7 +33,16 @@ namespace Numerical_Methods.Algorithms.Tests
 
             float relaxationWeight = 0.8f;
 
-            Assert.Catch<Exception>(() => RelaxationMethod.Solve(variableCoefficients, freeCoefficients, epsilon, relaxationWeight));
+            Matrix expectedResult = new Matrix(new float[,] {
+                { 13f / 25f },
+                { 2f / 25f },
+                { 41f / 25f }
+            });
+
+            Matrix result = RelaxationMethod.Solve(variableCoefficients, freeCoefficients, epsilon, relaxationWeight);
+
+            Assert.True(expectedResult.NearEquals(result), "Matrices are not equal:\nExpected:{0}\nResult:{1}",
+                expectedResult.ToString(), result.ToString());
         }
         
         [Test]

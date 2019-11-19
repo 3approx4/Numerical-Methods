@@ -6,11 +6,12 @@ namespace Numerical_Methods.Algorithms
 {
     public class JacobiMethod
     {
-        public static Matrix Solve(Matrix aMatrix, Matrix bMatrix, float epsilon)
+        public static Matrix Solve(Matrix aMatrix, Matrix bMatrix, float epsilon, bool checkDominance = false)
         {
             // Check if the result is reachable during next iterations ( matrix is diagonally dominant )
-            if(!aMatrix.IsDiagonallyDominant())
-                throw new Exception("Matrix is not diagonally dominant!");
+            if (checkDominance)
+                if (!aMatrix.IsDiagonallyDominant())
+                    throw new Exception("Matrix is not diagonally dominant!");
             // Start from maximal delta value possible
             float maxDelta = float.MaxValue;
             // Result of previous iteration
@@ -25,7 +26,7 @@ namespace Numerical_Methods.Algorithms
                     // Calculate x based on the row values and x values from previous iteration
                     currX[i, 0] = aMatrix.CombineValues(i, prevX, bMatrix);
                 }
-                
+
                 // Calculate current distance between iteration results
                 maxDelta = currX.MaxDelta(prevX);
 

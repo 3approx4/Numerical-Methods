@@ -5,11 +5,12 @@ namespace Numerical_Methods.Algorithms
 {
     public class GaussZeidelMethod
     {
-        public static Matrix Solve(Matrix aMatrix, Matrix bMatrix, float epsilon)
+        public static Matrix Solve(Matrix aMatrix, Matrix bMatrix, float epsilon, bool checkDominance = false)
         {
             // Check if the result is reachable during next iterations ( matrix is diagonally dominant )
-            if(!aMatrix.IsDiagonallyDominant())
-                throw new Exception("Matrix is not diagonally dominant!");
+            if (checkDominance)
+                if (!aMatrix.IsDiagonallyDominant())
+                    throw new Exception("Matrix is not diagonally dominant!");
             // Result of previous iteration
             Matrix prevX = new Matrix(bMatrix.Height, bMatrix.Width);
             // Result of current iteration

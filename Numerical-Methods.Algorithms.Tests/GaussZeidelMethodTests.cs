@@ -28,9 +28,19 @@ namespace Numerical_Methods.Algorithms.Tests
                 { -2 }
             });
             
+            Matrix expectedResult = new Matrix(new float[,]
+              {
+                { 61f / 16f },
+                { 27f / 16f },
+                { 15f / 16f }
+              });
+
             float epsilon = 0.0001f;
 
-            Assert.Catch<Exception>(() => GaussZeidelMethod.Solve(variableCoefficients, freeCoefficients, epsilon));
+            Matrix result = GaussZeidelMethod.Solve(variableCoefficients, freeCoefficients, epsilon);
+
+            Assert.True(expectedResult.NearEquals(result), "Matrices are not equal:\nExpected:{0}\nResult:{1}",
+                expectedResult.ToString(), result.ToString());
         }
         
         [Test]
