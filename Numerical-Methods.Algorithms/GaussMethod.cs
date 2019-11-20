@@ -14,6 +14,7 @@ namespace Numerical_Methods.Algorithms
         /// <returns>Vector of variable values which are the solution</returns>
         public static Matrix Solve(Matrix aMatrix, Matrix bMatrix)
         {
+            // Copy matrix
             Matrix result = new Matrix(bMatrix.ToArray());
 
             // 1. Forward Gauss
@@ -44,7 +45,7 @@ namespace Numerical_Methods.Algorithms
                 bMatrix[i, 0] /= aMatrix[i, i];
                 aMatrix.NormalizeRow(i);
             }
-            // Currently is not working for the Last two equations. We have the final results already before the reverse steps
+
             // 2. Reverse Gauss
             for (int i = aMatrix.Height - 1; i >= 0; i--)
             {
