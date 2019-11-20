@@ -45,7 +45,7 @@ namespace Numerical_Methods.Algorithms
                 bMatrix[i, 0] /= aMatrix[i, i];
                 aMatrix.NormalizeRow(i);
             }
-
+            
             // 2. Reverse Gauss
             for (int i = aMatrix.Height - 1; i >= 0; i--)
             {
