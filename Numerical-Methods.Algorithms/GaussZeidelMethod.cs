@@ -23,7 +23,7 @@ namespace Numerical_Methods.Algorithms
                 // Calculate each X value
                 for (int i = 0; i < bMatrix.Height; i++)
                 {
-                    // Calculate x based on the row values and x values from previous iteration
+                    // Calculate x based on the row values and x values from current iteration
                     currX[i, 0] = aMatrix.CombineValues(i, currX, bMatrix);
                 }
                 // Calculate current distance between iteration results
