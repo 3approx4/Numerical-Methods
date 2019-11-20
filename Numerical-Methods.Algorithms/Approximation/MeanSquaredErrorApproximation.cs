@@ -13,10 +13,23 @@ namespace Numerical_Methods.Algorithms.Approximation
         /// <returns>Matrix with A values for each X variable</returns>
         public static Matrix Approximate(Matrix xValues, Matrix yValues)
         {
-            // TODO investigate why is the matrix 2x2
-            Matrix dMatrix = new Matrix(yValues.Height, xValues.Width);
+            if (xValues.Height != 1 || yValues.Width != 1)
+                throw new Exception("Incorrect input");
 
-            return dMatrix;
+            Matrix xMatrix = new Matrix(yValues.Height, xValues.Width);
+
+            // Raise bets
+            for (int x = 0; x < xValues.Width; x++)
+                xValues[0, x] = (float)Math.Pow(xValues[0, x], x);
+
+            // Copy rows
+            for (int y = 0; y < yValues.Height; y++)
+                xMatrix[y] = xValues[0];
+
+            // Solving
+            Matrix aMatrix = RelaxationMethod.Solve(xMatrix, yValues, 0.00001f, 0.8f);
+
+            return aMatrix;
         }
     }
 }
