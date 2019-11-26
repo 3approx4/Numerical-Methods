@@ -35,7 +35,7 @@ namespace Numerical_Methods.Libs
         {
             this.matrix = new float[1, array.Length];
             for (int i = 0; i < array.Length; i++)
-                matrix[1, i] = array[i];
+                matrix[0, i] = array[i];
         }
 
         /// <summary>
