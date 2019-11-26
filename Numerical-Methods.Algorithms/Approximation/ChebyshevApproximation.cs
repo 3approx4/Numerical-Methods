@@ -1,5 +1,6 @@
 using Numerical_Methods.Libs;
 using System;
+using System.Linq;
 
 namespace Numerical_Methods.Algorithms.Approximation
 {
@@ -9,7 +10,7 @@ namespace Numerical_Methods.Algorithms.Approximation
     {
         public static float[] Approximate(float a, float b, int degree, FittingFunction fittingFunction)
         {
-            int n = degree;
+            int n = degree + 1;
             float[] result = new float[n];
             var u = ChebyshevSpace(n);
             float[] xs = new float[n];
@@ -19,28 +20,54 @@ namespace Numerical_Methods.Algorithms.Approximation
                 xs[j] = Expand(u[j], a, b);
                 ys[j] = Convert.ToSingle(fittingFunction(xs[j]));
             }
-            for(int j = 2; j < n; j++)
+            for (int j = 0; j < n; j++)
             {
                 float c = 0;
                 for (int i = 0; i < n; i++)
                 {
-                    // todo fix loop of matrix calculation with approximation coefficients
-                    var f = Convert.ToSingle(fittingFunction(xs[i]));
+                    var f = ys[i];
                     var t = CalculatePolynom(j, u[i]);
-                    c += f * t; 
+                    c += f * t;
                 }
                 result[j] = (2.0f / n) * c;
             }
+            result[0] /= 2.0f;
+            return result;
+        }
 
+        public static float[] Approximate(float[] xValues, float[] yValues)
+        {
+            int n = xValues.Length;
+            float[] result = new float[n];
+            var u = ChebyshevSpace(n); 
+            float min = xValues.Min();
+            float max = xValues.Max(); 
+            float[] xs = new float[n];
+            for (int j = 0; j < n; j++)
+            {
+                xs[j] = Squish(u[j],min, max);
+            }
+            for (int j = 0; j < n; j++)
+            {
+                float c = 0;
+                for (int i = 0; i < n; i++)
+                {
+                    var f = yValues[i];
+                    var t = CalculatePolynom(j, u[i]);
+                    c += f * t;
+                }
+                result[j] = (2.0f / n) * c;
+            }
+            result[0] /= 2.0f;
             return result;
         }
 
         public static float Evaluate(float[] polynom, float value)
         {
             float result = 0;
-            for(int i = 0; i < polynom.Length; i++)
+            for (int i = 0; i < polynom.Length; i++)
             {
-                result += polynom[i] * CalculatePolynom(i, value) - (0.5f * polynom[0]);
+                result += Convert.ToSingle(polynom[i] * CalculatePolynom(i, value));
             }
             return result;
         }
@@ -49,9 +76,11 @@ namespace Numerical_Methods.Algorithms.Approximation
         /// Get the x from [a;b] converted to [-1;1]
         /// </summary>
         /// <returns></returns>
-        private static float Squish(float x, float a, float b)
+        public static float Squish(float x, float a, float b)
         {
-            return (2 * x - a - b) / (a - b);
+            float c = (a + b) / 2.0f;
+            float m = (b - a) / 2.0f;
+            return (x - c) / m;
         }
 
         /// <summary>
@@ -77,7 +106,7 @@ namespace Numerical_Methods.Algorithms.Approximation
             var points = new float[pointNumber];
             for (int i = 0; i < pointNumber; i++)
             {
-                points[i] = (i + step)/pointNumber;
+                points[i] = (i + step) / pointNumber;
             }
             for (int i = 0; i < pointNumber; i++)
             {
@@ -94,28 +123,28 @@ namespace Numerical_Methods.Algorithms.Approximation
         /// <returns>Polynom value</returns>
         private static float CalculatePolynom(int polynomOrder, float value)
         {
-            float x_0 = 1;
+            float x0 = 1.0f;
             float x1 = value;
-            float currentX = 0;
+            float xx = 0.0f;
 
             switch (polynomOrder)
             {
                 case 0:
-                    currentX = x_0;
+                    xx = 1;
                     break;
                 case 1:
-                    currentX = x1;
+                    xx = value;
                     break;
                 default:
                     for (int i = 2; i <= polynomOrder; i++)
                     {
-                        currentX = 2 * currentX * x1 - x_0;
-                        x_0 = x1;
-                        x1 = currentX;
+                        xx = 2 * value * x1 - x0;
+                        x0 = x1;
+                        x1 = xx;
                     }
                     break;
             }
-            return currentX;
+            return xx;
         }
     }
 }
