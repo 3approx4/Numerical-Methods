@@ -7,4 +7,8 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Numerical-Methods.Algorithms\Numerical-Methods.Algorithms.csproj" />
+  </ItemGroup>
+
 </Project>

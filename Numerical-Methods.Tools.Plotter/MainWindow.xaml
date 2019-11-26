@@ -5,8 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Numerical_Methods.Tools.Plotter"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="[ 3 Approx 4 ] Plotter tool" Height="450" Width="800"
+        Loaded="Window_Loaded">
     <Grid>
+
+        <Canvas Name="canGraph"
+                Background="White"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Width="780"
+                Height="410"/>
 
     </Grid>
 </Window>

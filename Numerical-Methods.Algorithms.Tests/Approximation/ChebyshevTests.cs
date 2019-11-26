@@ -9,21 +9,21 @@ namespace Numerical_Methods.Algorithms.Tests.Approximation
     [TestFixture]
     class ChebyshevTests
     {
-        [Test]
-        public void Approximate()
-        {
-            var polynom = ChebyshevApproximation.Approximate(-2, 2, 9, myFunc);
+        //[Test]
+        //public void Approximate()
+        //{
+        //    var polynom = ChebyshevApproximation.Approximate(-2, 2, 9, myFunc);
 
-            float[] results = new float[9];
+        //    float[] results = new float[9];
 
-            for(int i = 0 ; i < 9; i++)
-            {
-                float x = -2.0f + 0.5f * i;
-                results[i] = ChebyshevApproximation.Evaluate(polynom, x);
-            }
+        //    for(int i = 0 ; i < 9; i++)
+        //    {
+        //        float x = -2.0f + 0.5f * i;
+        //        results[i] = ChebyshevApproximation.Evaluate(polynom, x);
+        //    }
 
-            Assert.That(results.Length);
-        }
+        //    Assert.That(results.Length);
+        //}
 
         double myFunc(double x)
         {
