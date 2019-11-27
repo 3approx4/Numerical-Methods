@@ -9,7 +9,7 @@
         Loaded="Window_Loaded">
     <Grid>
 
-        <Canvas Name="canGraph"
+        <Canvas x:Name="canGraph"
                 Background="White"
                 VerticalAlignment="Center"
                 HorizontalAlignment="Center"
