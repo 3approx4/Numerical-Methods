@@ -34,7 +34,13 @@ namespace Numerical_Methods.Algorithms.Approximation
             result[0] /= 2.0f;
             return result;
         }
-
+        
+        /// <summary>
+        /// Approximate the function using the table defined function
+        /// </summary>
+        /// <param name="xValues">x values of the table function</param>
+        /// <param name="yValues">y values of the table function</param>
+        /// <returns></returns>
         public static float[] Approximate(float[] xValues, float[] yValues)
         {
             int n = xValues.Length;
@@ -45,7 +51,7 @@ namespace Numerical_Methods.Algorithms.Approximation
             float[] xs = new float[n];
             for (int j = 0; j < n; j++)
             {
-                xs[j] = Squish(u[j],min, max);
+                xs[j] = Expand(u[j],min, max);
             }
             for (int j = 0; j < n; j++)
             {
@@ -61,7 +67,13 @@ namespace Numerical_Methods.Algorithms.Approximation
             result[0] /= 2.0f;
             return result;
         }
-
+        
+        /// <summary>
+        /// Calculate the y value using polynom coefficients
+        /// </summary>
+        /// <param name="polynom">Chebyshev polynom coefficients</param>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static float Evaluate(float[] polynom, float value)
         {
             float result = 0;

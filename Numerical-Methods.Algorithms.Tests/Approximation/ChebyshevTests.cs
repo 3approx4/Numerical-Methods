@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using Numerical_Methods.Libs;
 
 namespace Numerical_Methods.Algorithms.Tests.Approximation
 {
@@ -18,14 +19,6 @@ namespace Numerical_Methods.Algorithms.Tests.Approximation
             float step = 0.5f;
             int rank = CalculateRank(a, b, step);
             var polynom = ChebyshevApproximation.Approximate(a, b, rank, myFunc);
-            var xvals = GenerateX(a, b, step);
-            var yvals = new float[rank];
-            for(int i = 0; i < rank; i++)
-            {
-                yvals[i] = Convert.ToSingle(myFunc(xvals[i])); 
-            }
-            var poly_arr = ChebyshevApproximation.Approximate(xvals, yvals);
-            var xs = GenerateX(a, b, step);
 
             List<float> results = new List<float>();
             var xApprox = GenerateX(a, b, 0.0001f);
@@ -35,11 +28,7 @@ namespace Numerical_Methods.Algorithms.Tests.Approximation
                 float x = ChebyshevApproximation.Squish(i, a, b);
                 results.Add(ChebyshevApproximation.Evaluate(polynom, x));
             }
-            for(int i = 0; i < results.Count; i++)
-            {
-                Console.WriteLine($"{xApprox[i]},{results[i]}");
-            }
-            Assert.That(poly_arr.Equals(polynom));
+            Assert.That(polynom.Length == rank + 1);
         }
 
         [Test]
@@ -53,28 +42,31 @@ namespace Numerical_Methods.Algorithms.Tests.Approximation
             {
                 10.0f, -2.0f, 0, -7.0f, 7.0f, 0, 0
             };
-            float[] xx = new float[xValues.Length];
-
-            for(int i = 0; i < xValues.Length; i++)
-            {
-                float min = xValues.Min();
-                float max = xValues.Max();
-                xx[i] = ChebyshevApproximation.Squish(xValues[i], min, max);
-            }
-
             var polynom = ChebyshevApproximation.Approximate(xValues, yValues);
+            
+            Assert.That(polynom.Length == xValues.Length);
+        }
+    
+        [Test]
+        public void CompareTableAndFunc()
+        {
+            float a = -2.0f;
+            float b = 2.0f;
+            float step = 0.5f;
+            int rank = CalculateRank(a, b, step);
+            var xValues = GenerateX(a, b, step);
+            var yValues = new float[rank];
 
-            List<float> results = new List<float>();
+            for (int i = 0; i < rank; i++)
+            {
+                yValues[i] = (float) myFunc(xValues[i]);
+            }
 
-            for (int i = 0; i < xValues.Length; i ++)
-            {
-                results.Add(ChebyshevApproximation.Evaluate(polynom, xx[i]));
-            }
-            for (int i = 0; i < results.Count; i++)
-            {
-                Console.WriteLine($"{results[i]}");
-            }
-            Assert.That(results.Equals(yValues));
+            var expectedCoefficients = new Matrix(ChebyshevApproximation.Approximate(a, b, rank - 1, myFunc));
+
+            var actualCoefficients = new Matrix(ChebyshevApproximation.Approximate(xValues, yValues));
+            
+            Assert.That(actualCoefficients.NearEquals(expectedCoefficients, (float)Math.PI + 0.2f), $"Expected: {expectedCoefficients.ToString()}, actual {actualCoefficients.ToString()}");
         }
 
         double myFunc(double x)
