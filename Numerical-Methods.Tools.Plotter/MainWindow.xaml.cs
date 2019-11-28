@@ -2,16 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Numerical_Methods.Tools.Plotter
@@ -21,11 +13,6 @@ namespace Numerical_Methods.Tools.Plotter
     /// </summary>
     public partial class MainWindow : Window
     {
-        public List<Point> Points = new List<Point>()
-        {
-            new Point(1, 42),
-            new Point(4, 10),
-        };
 
         public MainWindow()
         {
@@ -34,11 +21,10 @@ namespace Numerical_Methods.Tools.Plotter
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            var coefs = MeanSquaredErrorApproximation.Approximate(
-                new Libs.Matrix(new float[,] {
+            var xMatrix = new Libs.Matrix(new float[,] {
                     { -3.2f, -2.1f, 0.4f, 0.7f, 2f, 2.5f, 2.777f }
-                }),
-                new Libs.Matrix(new float[,] {
+                });
+            var yMatrix = new Libs.Matrix(new float[,] {
                     { 10f },
                     { -2f },
                     { 0f },
@@ -46,12 +32,16 @@ namespace Numerical_Methods.Tools.Plotter
                     { 7f },
                     { 0f },
                     { 0f }
-                })
+                });
+            var coefs = MeanSquaredErrorApproximation.Approximate(
+                xMatrix,
+                yMatrix,
+                2
             );
 
             var points = new List<Point>();
 
-            for (float x = -100; x <= 100; x += 0.01f)
+            for (float x = -3.2f; x <= 2.777; x += 0.0001f)
             {
                 float y = 0;
                 for (int c = 0; c < coefs.ToArray().Length; c++)
@@ -59,10 +49,25 @@ namespace Numerical_Methods.Tools.Plotter
                 points.Add(new Point(x, y));
             }
 
-            DrawGraph(points);
+            using (var file = System.IO.File.CreateText(System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "points.csv")))
+            {
+                foreach (var point in points)
+                {
+                    file.WriteLine(string.Format("{0},{1}", point.X, point.Y));
+                }
+                file.Close();
+            }
+
+            DrawGraph(points, Brushes.Green);
+
+            var realPoints = new List<Point>();
+            for (int i = 0; i < xMatrix.Width; i++)
+                realPoints.Add(new Point(xMatrix[0, i], yMatrix[i, 0]));
+
+            DrawGraph(realPoints, Brushes.Orange);
         }
 
-        protected void DrawGraph(List<Point> pointList)
+        protected void DrawGraph(List<Point> pointList, Brush brush)
         {
             const double margin = 10;
             double xmin = margin;
@@ -115,18 +120,18 @@ namespace Numerical_Methods.Tools.Plotter
                 var maxX = pointList.Max(p => Math.Abs(p.X));
                 var maxY = pointList.Max(p => Math.Abs(p.Y));
 
-                var xScale = xmax / maxX;
-                var yScale = ymax / maxY;
+                var xScale = xmax / maxX /2;
+                var yScale = ymax / maxY /2;
 
                 PointCollection points = new PointCollection();
                 pointList.ForEach((p) => points.Add(new Point(
-                    p.X * xScale,
-                    p.Y * yScale
+                    p.X * xScale + xmean,
+                    p.Y * yScale + ymean
                     )));
 
                 Polyline polyline = new Polyline();
                 polyline.StrokeThickness = 1;
-                polyline.Stroke = Brushes.Green;
+                polyline.Stroke = brush;
                 polyline.Points = points;
 
                 canGraph.Children.Add(polyline);
