@@ -7,72 +7,116 @@
         xmlns:oxy="clr-namespace:OxyPlot.Wpf;assembly=OxyPlot.Wpf"
         mc:Ignorable="d"
         Title="[3 Approx 4] Plotter 2" Height="450" Width="800">
-    <Grid Loaded="Grid_Loaded">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Method">
+                <MenuItem Header="MSE">
+                    <MenuItem Header="Sin(5x)*Exp^x" Click="MSE_Func_Click"/>
+                    <MenuItem Header="Table function" Click="MSE_Table_Click"/>
+                    <MenuItem Header="Test function" Click="DemoTable_MSE_Click"/>
+                </MenuItem>
+                <MenuItem Header="Chebyshev">
+                    <MenuItem Header="Sin(5x)*Exp^x" Click="ChebyshevFunc_Click"/>
+                    <MenuItem Header="Table function" Click="ChebyshevTable_Click"/>
+                    <MenuItem Header="Test function" Click="DemoTable_Chebyshev_Click"/>                    
+                </MenuItem>
+            </MenuItem>
+        </Menu>
+        <Grid Loaded="Grid_Loaded">
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-        </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
 
 
-        <oxy:Plot Grid.Row="0" Grid.Column="0"
-                  Title="MNK (k=1)">
-            <oxy:LineSeries x:Name="MnkK1Plotter"
+            <oxy:Plot Grid.Row="0" Grid.Column="0"
+                  Title="Polynom Rank 1">
+                <oxy:LineSeries x:Name="MnkK1Plotter"
                             DataFieldX="X"
                             DataFieldY="Y"/>
-            <oxy:LineSeries x:Name="RealDataPlotFor1"
+                <oxy:LineSeries x:Name="RealDataPlotFor1"
                             DataFieldX="X"
                             DataFieldY="Y"/>
-        </oxy:Plot>
-        <oxy:Plot Grid.Row="0" Grid.Column="1"
-                  Title="MNK (k=2)">
-            <oxy:LineSeries x:Name="MnkK2Plotter"
+            </oxy:Plot>
+            <oxy:Plot Grid.Row="0" Grid.Column="1"
+                  Title="Polynom Rank 2">
+                <oxy:LineSeries x:Name="MnkK2Plotter"
                             DataFieldX="X"
                             DataFieldY="Y"/>
-            <oxy:LineSeries x:Name="RealDataPlotFor2"
+                <oxy:LineSeries x:Name="RealDataPlotFor2"
                             DataFieldX="X"
                             DataFieldY="Y"/>
-        </oxy:Plot>
-        <oxy:Plot Grid.Row="0" Grid.Column="3"
-                  Title="MNK (k=3)">
-            <oxy:LineSeries x:Name="MnkK3Plotter"
+            </oxy:Plot>
+            <oxy:Plot Grid.Row="0" Grid.Column="3"
+                  Title="Polynom Rank = 3">
+                <oxy:LineSeries x:Name="MnkK3Plotter"
                             DataFieldX="X"
                             DataFieldY="Y"/>
-            <oxy:LineSeries x:Name="RealDataPlotFor3"
+                <oxy:LineSeries x:Name="RealDataPlotFor3"
                             DataFieldX="X"
                             DataFieldY="Y"/>
-        </oxy:Plot>
-        <oxy:Plot Grid.Row="1" Grid.Column="0"
-                  Title="MNK (k=4)">
-            <oxy:LineSeries x:Name="MnkK4Plotter"
+            </oxy:Plot>
+            <oxy:Plot Grid.Row="1" Grid.Column="0"
+                  Title="Polynom Rank = 4">
+                <oxy:LineSeries x:Name="MnkK4Plotter"
                             DataFieldX="X"
                             DataFieldY="Y"/>
-            <oxy:LineSeries x:Name="RealDataPlotFor4"
+                <oxy:LineSeries x:Name="RealDataPlotFor4"
                             DataFieldX="X"
                             DataFieldY="Y"/>
-        </oxy:Plot>
-        <oxy:Plot Grid.Row="1" Grid.Column="1"
-                  Title="MNK (k=5)">
-            <oxy:LineSeries x:Name="MnkK5Plotter"
+            </oxy:Plot>
+            <oxy:Plot Grid.Row="1" Grid.Column="1"
+                  Title="Polynom Rank = 5">
+                <oxy:LineSeries x:Name="MnkK5Plotter"
                             DataFieldX="X"
                             DataFieldY="Y"/>
-            <oxy:LineSeries x:Name="RealDataPlotFor5"
+                <oxy:LineSeries x:Name="RealDataPlotFor5"
                             DataFieldX="X"
                             DataFieldY="Y"/>
-        </oxy:Plot>
-        <oxy:Plot Grid.Row="1" Grid.Column="2"
-                  Title="MNK (k=6)">
-            <oxy:LineSeries x:Name="MnkK6Plotter"
+            </oxy:Plot>
+            <oxy:Plot Grid.Row="1" Grid.Column="2"
+                  Title="Polynom Rank = 6">
+                <oxy:LineSeries x:Name="MnkK6Plotter"
                             DataFieldX="X"
                             DataFieldY="Y"/>
-            <oxy:LineSeries x:Name="RealDataPlotFor6"
+                <oxy:LineSeries x:Name="RealDataPlotFor6"
                             DataFieldX="X"
                             DataFieldY="Y"/>
-        </oxy:Plot>
-    </Grid>
+            </oxy:Plot>
+            <oxy:Plot Grid.Row="2" Grid.Column="0"
+                  Title="Polynom Rank = 7">
+                <oxy:LineSeries x:Name="MnkK7Plotter"
+                            DataFieldX="X"
+                            DataFieldY="Y"/>
+                <oxy:LineSeries x:Name="RealDataPlotFor7"
+                            DataFieldX="X"
+                            DataFieldY="Y"/>
+            </oxy:Plot>
+            <oxy:Plot Grid.Row="2" Grid.Column="1"
+                  Title="Polynom Rank = 8">
+                <oxy:LineSeries x:Name="MnkK8Plotter"
+                            DataFieldX="X"
+                            DataFieldY="Y"/>
+                <oxy:LineSeries x:Name="RealDataPlotFor8"
+                            DataFieldX="X"
+                            DataFieldY="Y"/>
+            </oxy:Plot>
+            <oxy:Plot Grid.Row="2" Grid.Column="2"
+                  Title="Polynom Rank = 9">
+                <oxy:LineSeries x:Name="MnkK9Plotter"
+                            DataFieldX="X"
+                            DataFieldY="Y"/>
+                <oxy:LineSeries x:Name="RealDataPlotFor9"
+                            DataFieldX="X"
+                            DataFieldY="Y"/>
+            </oxy:Plot>
+        </Grid>
+    </DockPanel>    
 </Window>

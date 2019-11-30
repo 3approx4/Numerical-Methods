@@ -17,7 +17,7 @@ namespace Numerical_Methods.Algorithms.Tests.Approximation
             float a = -2.0f;
             float b = 2.0f;
             float step = 0.5f;
-            int rank = CalculateRank(a, b, step);
+            int rank = ChebyshevApproximation.CalculateRank(a, b, step);
             var polynom = ChebyshevApproximation.Approximate(a, b, rank, myFunc);
 
             List<float> results = new List<float>();
@@ -53,7 +53,7 @@ namespace Numerical_Methods.Algorithms.Tests.Approximation
             float a = -2.0f;
             float b = 2.0f;
             float step = 0.5f;
-            int rank = CalculateRank(a, b, step);
+            int rank = ChebyshevApproximation.CalculateRank(a, b, step);
             var xValues = GenerateX(a, b, step);
             var yValues = new float[rank];
 
@@ -74,21 +74,10 @@ namespace Numerical_Methods.Algorithms.Tests.Approximation
             return Math.Sin(5 * x) * Math.Exp(x);
         }
 
-        /// <summary>
-        /// Calculate the approximation rank (n)
-        /// </summary>
-        /// <param name="a">Interval left bound</param>
-        /// <param name="b">Interval right bound</param>
-        /// <param name="step"></param>
-        /// <returns>(abs(a)+abs(b))/step</returns>
-        private static int CalculateRank(float a, float b, float step)
-        {
-            return Convert.ToInt32((Math.Abs(a) + Math.Abs(b)) / step);
-        }
 
         private static float[] GenerateX(float a, float b, float step)
         {
-            int pointCount = CalculateRank(a, b, step);
+            int pointCount = ChebyshevApproximation.CalculateRank(a, b, step);
             var result = new float[pointCount];
             for (int i = 0; i < pointCount; i++)
             {

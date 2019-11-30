@@ -1,4 +1,3 @@
-using Numerical_Methods.Libs;
 using System;
 using System.Linq;
 
@@ -41,9 +40,9 @@ namespace Numerical_Methods.Algorithms.Approximation
         /// <param name="xValues">x values of the table function</param>
         /// <param name="yValues">y values of the table function</param>
         /// <returns></returns>
-        public static float[] Approximate(float[] xValues, float[] yValues)
+        public static float[] Approximate(float[] xValues, float[] yValues, int rank = -1)
         {
-            int n = xValues.Length;
+            int n = (rank == -1 ? xValues.Length : rank) + 1;
             float[] result = new float[n];
             var u = ChebyshevSpace(n); 
             float min = xValues.Min();
@@ -102,7 +101,7 @@ namespace Numerical_Methods.Algorithms.Approximation
         /// <param name="a">Left border</param>
         /// <param name="b">Right border</param>
         /// <returns></returns>
-        private static float Expand(float u, float a, float b)
+        public static float Expand(float u, float a, float b)
         {
             return ((b - a) * u + (a + b)) / 2.0f;
         }
@@ -157,6 +156,30 @@ namespace Numerical_Methods.Algorithms.Approximation
                     break;
             }
             return xx;
+        }
+
+
+        /// <summary>
+        /// Calculate the approximation rank (n)
+        /// </summary>
+        /// <param name="a">Interval left bound</param>
+        /// <param name="b">Interval right bound</param>
+        /// <param name="step"></param>
+        /// <returns>(abs(a)+abs(b))/step</returns>
+        public static int CalculateRank(float a, float b, float step)
+        {
+            return Convert.ToInt32((Math.Abs(a) + Math.Abs(b)) / step);
+        }
+
+        public static float[] GenerateX(float a, float b, float step)
+        {
+            int pointCount = ChebyshevApproximation.CalculateRank(a, b, step);
+            var result = new float[pointCount];
+            for (int i = 0; i < pointCount; i++)
+            {
+                result[i] = a + i * step;
+            }
+            return result;
         }
     }
 }
