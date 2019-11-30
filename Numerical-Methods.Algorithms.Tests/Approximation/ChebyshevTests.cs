@@ -42,7 +42,7 @@ namespace Numerical_Methods.Algorithms.Tests.Approximation
             {
                 10.0f, -2.0f, 0, -7.0f, 7.0f, 0, 0
             };
-            var polynom = ChebyshevApproximation.Approximate(xValues, yValues);
+            var polynom = ChebyshevApproximation.Approximate(xValues, yValues, xValues.Length - 1);
             
             Assert.That(polynom.Length == xValues.Length);
         }
@@ -64,7 +64,7 @@ namespace Numerical_Methods.Algorithms.Tests.Approximation
 
             var expectedCoefficients = new Matrix(ChebyshevApproximation.Approximate(a, b, rank - 1, myFunc));
 
-            var actualCoefficients = new Matrix(ChebyshevApproximation.Approximate(xValues, yValues));
+            var actualCoefficients = new Matrix(ChebyshevApproximation.Approximate(xValues, yValues, xValues.Length - 1));
             
             Assert.That(actualCoefficients.NearEquals(expectedCoefficients, (float)Math.PI + 0.2f), $"Expected: {expectedCoefficients.ToString()}, actual {actualCoefficients.ToString()}");
         }
