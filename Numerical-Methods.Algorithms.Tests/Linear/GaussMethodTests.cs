@@ -1,7 +1,7 @@
 using Numerical_Methods.Libs;
 using NUnit.Framework;
 
-namespace Numerical_Methods.Algorithms.Tests
+namespace Numerical_Methods.Algorithms.Tests.Linear
 {
     public class GaussMethodTests
     {
@@ -48,7 +48,7 @@ namespace Numerical_Methods.Algorithms.Tests
                 { 1, 3, -2 },
                 { 1, 2, 3 }
             });
-            
+
             Matrix freeCoefficients = new Matrix(new float[,]
             {
                 { 5 },
@@ -64,11 +64,11 @@ namespace Numerical_Methods.Algorithms.Tests
             });
 
             Matrix result = GaussMethod.Solve(variableCoefficients, freeCoefficients);
-            
+
             Assert.True(expectedResult.NearEquals(result), "Matrices are not equal:\nExpected:{0}\nResult:{1}",
                 expectedResult.ToString(), result.ToString());
         }
-        
+
         [Test]
         public void ThirdEquationTest()
         {
@@ -78,7 +78,7 @@ namespace Numerical_Methods.Algorithms.Tests
                 { -2, 8, 1 },
                 { 1, 3, -10 }
             });
-            
+
             Matrix freeCoefficients = new Matrix(new float[,]
             {
                 { 30 },
@@ -94,7 +94,7 @@ namespace Numerical_Methods.Algorithms.Tests
             });
 
             Matrix result = GaussMethod.Solve(variableCoefficients, freeCoefficients);
-            
+
             Assert.True(expectedResult.NearEquals(result), "Matrices are not equal:\nExpected:{0}\nResult:{1}",
                 expectedResult.ToString(), result.ToString());
         }

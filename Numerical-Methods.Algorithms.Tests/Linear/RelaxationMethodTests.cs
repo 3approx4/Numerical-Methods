@@ -2,14 +2,15 @@ using System;
 using Numerical_Methods.Libs;
 using NUnit.Framework;
 
-namespace Numerical_Methods.Algorithms.Tests
+namespace Numerical_Methods.Algorithms.Tests.Linear
 {
     [TestFixture]
-    public class JacobiMethodTests
+    public class RelaxationMethodTests
     {
         [SetUp]
         public void Setup()
         {
+
         }
 
         [Test]
@@ -26,23 +27,24 @@ namespace Numerical_Methods.Algorithms.Tests
                 { 2 },
                 { -1 },
                 { -2 }
-            }); 
-            
-            Matrix expectedResult = new Matrix(new float[,]
-             {
-                { 61f / 16f },
-                { 27f / 16f },
-                { 15f / 16f }
-             });
+            });
 
             float epsilon = 0.0001f;
 
-            Matrix result = JacobiMethod.Solve(variableCoefficients, freeCoefficients, epsilon);
+            float relaxationWeight = 0.8f;
+
+            Matrix expectedResult = new Matrix(new float[,] {
+                { 13f / 25f },
+                { 2f / 25f },
+                { 41f / 25f }
+            });
+
+            Matrix result = RelaxationMethod.Solve(variableCoefficients, freeCoefficients, epsilon, relaxationWeight);
 
             Assert.True(expectedResult.NearEquals(result), "Matrices are not equal:\nExpected:{0}\nResult:{1}",
                 expectedResult.ToString(), result.ToString());
         }
-        
+
         [Test]
         public void SecondEquationTest()
         {
@@ -52,7 +54,7 @@ namespace Numerical_Methods.Algorithms.Tests
                 { 1, 3, -2 },
                 { 1, 2, 3 }
             });
-            
+
             Matrix freeCoefficients = new Matrix(new float[,]
             {
                 { 5 },
@@ -69,12 +71,14 @@ namespace Numerical_Methods.Algorithms.Tests
 
             float epsilon = 0.0001f;
 
-            Matrix result = JacobiMethod.Solve(variableCoefficients, freeCoefficients, epsilon);
-            
+            float relaxationWeight = 0.8f;
+
+            Matrix result = RelaxationMethod.Solve(variableCoefficients, freeCoefficients, epsilon, relaxationWeight);
+
             Assert.True(expectedResult.NearEquals(result), "Matrices are not equal:\nExpected:{0}\nResult:{1}",
                 expectedResult.ToString(), result.ToString());
         }
-        
+
         [Test]
         public void ThirdEquationTest()
         {
@@ -84,7 +88,7 @@ namespace Numerical_Methods.Algorithms.Tests
                 { -2, 8, 1 },
                 { 1, 3, -10 }
             });
-            
+
             Matrix freeCoefficients = new Matrix(new float[,]
             {
                 { 30 },
@@ -101,8 +105,10 @@ namespace Numerical_Methods.Algorithms.Tests
 
             float epsilon = 0.0001f;
 
-            Matrix result = JacobiMethod.Solve(variableCoefficients, freeCoefficients, epsilon);
-            
+            float relaxationWeight = 0.8f;
+
+            Matrix result = RelaxationMethod.Solve(variableCoefficients, freeCoefficients, epsilon, relaxationWeight);
+
             Assert.True(expectedResult.NearEquals(result), "Matrices are not equal:\nExpected:{0}\nResult:{1}",
                 expectedResult.ToString(), result.ToString());
         }
