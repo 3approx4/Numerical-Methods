@@ -8,6 +8,8 @@ namespace Numerical_Methods.Algorithms.Non_Linear
 {
     public class BisectionMethod
     {
+        private static float precentage = 0.1f;
+
         /// <summary>
         /// Check if convergention condition is achieved
         /// </summary>
@@ -24,8 +26,13 @@ namespace Numerical_Methods.Algorithms.Non_Linear
 
         public static Result Evaluate(FittingFunction function, float a, float b, float accuracy)
         {
+            float width = b - a;
+
             if (!Converge(function, a, b))
-                throw new Exception("Convergence condition is not achieved");
+                return Evaluate(function,
+                    a + (function(a) > 0 ? -width : width) * precentage,
+                    b + (function(a) > 0 ? -width : width) * precentage,
+                    accuracy);
 
             double result = 0;
 

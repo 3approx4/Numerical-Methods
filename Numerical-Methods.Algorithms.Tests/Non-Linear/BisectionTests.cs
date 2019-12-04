@@ -22,60 +22,73 @@ namespace Numerical_Methods.Algorithms.Tests.Non_Linear
 
             Assert.LessOrEqual(result2.Value, result1.Value);
             Assert.GreaterOrEqual(result2.Iterations, result1.Iterations);
+
+            Console.WriteLine(result1);
+            Console.WriteLine(result2);
         }
 
         [Test]
         public void Function_5_Test()
         {
             var a = 2f;
-            var b = 6f;
+            var b = 3f;
 
             var result1 = BisectionMethod.Evaluate(TestFunction, a, b, accuracyLowerBound);
             var result2 = BisectionMethod.Evaluate(TestFunction, a, b, accuracyUpperBound);
 
             Assert.LessOrEqual(result2.Value, result1.Value);
             Assert.GreaterOrEqual(result2.Iterations, result1.Iterations);
+
+            Console.WriteLine(result1);
+            Console.WriteLine(result2);
         }
 
-        [Ignore("Need to properly define the range")]
         [Test]
         public void Function_9_Test()
         {
-            var a = -10f;
-            float b = (float)Math.PI * (3f/2f) * 16;
+            var a = 0f;
+            float b = (float)Math.PI * (3f/2f);
 
             var result1 = BisectionMethod.Evaluate(TestFunction, a, b, accuracyLowerBound);
             var result2 = BisectionMethod.Evaluate(TestFunction, a, b, accuracyUpperBound);
 
             Assert.LessOrEqual(result2.Value, result1.Value);
             Assert.GreaterOrEqual(result2.Iterations, result1.Iterations);
+
+            Console.WriteLine(result1);
+            Console.WriteLine(result2);
         }
 
-        [Ignore("Need to properly define the range")]
         [Test]
         public void Function_11_Test()
         {
-            var a = -5f;
-            var b = 12f;
+            var a = 0f;
+            var b = 2f;
 
             var result1 = BisectionMethod.Evaluate(TestFunction, a, b, accuracyLowerBound);
             var result2 = BisectionMethod.Evaluate(TestFunction, a, b, accuracyUpperBound);
 
             Assert.LessOrEqual(result2.Value, result1.Value);
             Assert.GreaterOrEqual(result2.Iterations, result1.Iterations);
+
+            Console.WriteLine(result1);
+            Console.WriteLine(result2);
         }
         
         [Test]
         public void Function_15_Test()
         {
             var a = 0.2f;
-            var b = 5f;
+            var b = 1f;
 
             var result1 = BisectionMethod.Evaluate(TestFunction, a, b, accuracyLowerBound);
             var result2 = BisectionMethod.Evaluate(TestFunction, a, b, accuracyUpperBound);
 
             Assert.LessOrEqual(result2.Value, result1.Value);
             Assert.GreaterOrEqual(result2.Iterations, result1.Iterations);
+
+            Console.WriteLine(result1);
+            Console.WriteLine(result2);
         }
 
         public static double TestFunction(double x)
@@ -85,7 +98,7 @@ namespace Numerical_Methods.Algorithms.Tests.Non_Linear
 
         public static double Function_15(double x)
         {
-            return Math.Sqrt((4 - Math.Pow(x, 2)) / x);
+            return Math.Sqrt(4 - Math.Pow(x, 2)) / x;
         }
 
         public static double Function_5(double x)
@@ -102,7 +115,7 @@ namespace Numerical_Methods.Algorithms.Tests.Non_Linear
 
         public static double Function_11(double x)
         {
-            return Math.Pow(x, 2)/Math.Pow(x + 2, 3);
+            return x / Math.Pow(x + 2, 2);
         }
     }
 }

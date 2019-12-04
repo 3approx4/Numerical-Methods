@@ -9,6 +9,8 @@ namespace Numerical_Methods.Algorithms.Non_Linear
     public class NewtonMethod
     {
         private static double h = 0.000001;
+        private static float precentage = 0.1f;
+
         public static Result Evaluate(FittingFunction function, float a, float b, float accuracy)
         {
             double x0 = SetStartPoint(function, a, b);
@@ -34,7 +36,12 @@ namespace Numerical_Methods.Algorithms.Non_Linear
         {
             if (Converge(function, a)) return a;
             if (Converge(function, b)) return b;
-            throw new Exception("Convergence condition is not achieved");
+
+            float width = b - a;
+
+            return SetStartPoint(function, 
+                a + (function(a) > 0 ? -width : width) * precentage,
+                b + (function(a) > 0 ? -width : width) * precentage);
         }
 
         private static bool Converge(FittingFunction function, double x)

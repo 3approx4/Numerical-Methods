@@ -14,5 +14,10 @@ namespace Numerical_Methods.Libs
             Iterations = iterations;
             Value = value;
         }
+
+        public override string ToString()
+        {
+            return string.Format("Itrations: {0};\n Value: {1}", Iterations, Value);
+        }
     }
 }
