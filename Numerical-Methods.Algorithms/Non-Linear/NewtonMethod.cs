@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Numerical_Methods.Algorithms.Tests.Non_Linear
+namespace Numerical_Methods.Algorithms.Non_Linear
 {
     public class NewtonMethod
     {
