@@ -1,4 +1,4 @@
-﻿using Numerical_Methods.Algorithms.Approximation;
+﻿﻿using Numerical_Methods.Algorithms.Approximation;
 using Numerical_Methods.Libs;
 using System;
 using System.Collections.Generic;
@@ -51,7 +51,7 @@ namespace Numerical_Methods.Algorithms.Non_Linear
                     a = center;
                 }
 
-            } while (Math.Abs(b - a) <= accuracy);
+            } while (Math.Abs(b - a) > accuracy);
 
             return new Result(iterationCount, result);
         }

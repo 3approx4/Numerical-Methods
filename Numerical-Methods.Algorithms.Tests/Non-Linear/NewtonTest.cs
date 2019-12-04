@@ -35,8 +35,8 @@ namespace Numerical_Methods.Algorithms.Tests.Non_Linear
             var a = 2f;
             var b = 3f;
 
-            var result1 = NewtonMethod.Evaluate(TestFunction, a, b, accuracyLowerBound);
-            var result2 = NewtonMethod.Evaluate(TestFunction, a, b, accuracyUpperBound);
+            var result1 = NewtonMethod.Evaluate(Function_5, a, b, accuracyLowerBound);
+            var result2 = NewtonMethod.Evaluate(Function_5, a, b, accuracyUpperBound);
 
             Assert.LessOrEqual(result2.Value, result1.Value);
             Assert.GreaterOrEqual(result2.Iterations, result1.Iterations);
@@ -51,8 +51,8 @@ namespace Numerical_Methods.Algorithms.Tests.Non_Linear
             var a = 0f;
             float b = (float)Math.PI * (3f / 2f);
 
-            var result1 = NewtonMethod.Evaluate(TestFunction, a, b, accuracyLowerBound);
-            var result2 = NewtonMethod.Evaluate(TestFunction, a, b, accuracyUpperBound);
+            var result1 = NewtonMethod.Evaluate(Function_9, a, b, accuracyLowerBound);
+            var result2 = NewtonMethod.Evaluate(Function_9, a, b, accuracyUpperBound);
 
             Assert.LessOrEqual(result2.Value, result1.Value);
             Assert.GreaterOrEqual(result2.Iterations, result1.Iterations);
@@ -64,11 +64,11 @@ namespace Numerical_Methods.Algorithms.Tests.Non_Linear
         [Test]
         public void Function_11_Test()
         {
-            var a = 0f;
+            var a = 0.000001f;
             var b = 2f;
 
-            var result1 = NewtonMethod.Evaluate(TestFunction, a, b, accuracyLowerBound);
-            var result2 = NewtonMethod.Evaluate(TestFunction, a, b, accuracyUpperBound);
+            var result1 = NewtonMethod.Evaluate(Function_11, a, b, accuracyLowerBound);
+            var result2 = NewtonMethod.Evaluate(Function_11, a, b, accuracyUpperBound);
 
             Assert.LessOrEqual(result2.Value, result1.Value);
             Assert.GreaterOrEqual(result2.Iterations, result1.Iterations);
@@ -83,8 +83,8 @@ namespace Numerical_Methods.Algorithms.Tests.Non_Linear
             var a = 0.2f;
             var b = 1f;
 
-            var result1 = NewtonMethod.Evaluate(TestFunction, a, b, accuracyLowerBound);
-            var result2 = NewtonMethod.Evaluate(TestFunction, a, b, accuracyUpperBound);
+            var result1 = NewtonMethod.Evaluate(Function_15, a, b, accuracyLowerBound);
+            var result2 = NewtonMethod.Evaluate(Function_15, a, b, accuracyUpperBound);
 
             Assert.LessOrEqual(result2.Value, result1.Value);
             Assert.GreaterOrEqual(result2.Iterations, result1.Iterations);
