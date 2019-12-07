@@ -79,13 +79,13 @@ namespace Numerical_Methods.Algorithms.Tests.Non_Linear
         public void Function_15_Test()
         {
             var a = 0.2f;
-            var b = 1f;
-
+            var b = 2f;
+            var expectedResult = 2.0f;
             var result1 = BisectionMethod.Evaluate(Function_15, a, b, accuracyLowerBound);
             var result2 = BisectionMethod.Evaluate(Function_15, a, b, accuracyUpperBound);
 
-            Assert.LessOrEqual(result2.Value, result1.Value);
-            Assert.GreaterOrEqual(result2.Iterations, result1.Iterations);
+            Assert.LessOrEqual(result1.Value, expectedResult);
+            Assert.LessOrEqual(result2.Value, expectedResult);
 
             Console.WriteLine(result1);
             Console.WriteLine(result2);

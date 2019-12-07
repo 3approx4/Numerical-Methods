@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>netcoreapp3.0</TargetFramework>
+        <RootNamespace>Numerical_Methods.Non_Linear.Tasks</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Numerical-Methods.Algorithms\Numerical-Methods.Algorithms.csproj" />
+    </ItemGroup>
+
+</Project>

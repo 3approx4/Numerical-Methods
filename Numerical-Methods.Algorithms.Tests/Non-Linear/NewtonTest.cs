@@ -50,7 +50,6 @@ namespace Numerical_Methods.Algorithms.Tests.Non_Linear
         {
             var a = 0f;
             float b = (float)Math.PI * (3f / 2f);
-
             var result1 = NewtonMethod.Evaluate(Function_9, a, b, accuracyLowerBound);
             var result2 = NewtonMethod.Evaluate(Function_9, a, b, accuracyUpperBound);
 
@@ -64,14 +63,13 @@ namespace Numerical_Methods.Algorithms.Tests.Non_Linear
         [Test]
         public void Function_11_Test()
         {
-            var a = 0.000001f;
+            var a = 0.000000000001f;
             var b = 2f;
-
+            var expectedResult = 0f;
             var result1 = NewtonMethod.Evaluate(Function_11, a, b, accuracyLowerBound);
             var result2 = NewtonMethod.Evaluate(Function_11, a, b, accuracyUpperBound);
 
-            Assert.LessOrEqual(result2.Value, result1.Value);
-            Assert.GreaterOrEqual(result2.Iterations, result1.Iterations);
+            Assert.LessOrEqual(result2.Value, expectedResult);
 
             Console.WriteLine(result1);
             Console.WriteLine(result2);
@@ -81,13 +79,12 @@ namespace Numerical_Methods.Algorithms.Tests.Non_Linear
         public void Function_15_Test()
         {
             var a = 0.2f;
-            var b = 1f;
-
+            var b = 2f;
+            var expectedResult = 2f;
             var result1 = NewtonMethod.Evaluate(Function_15, a, b, accuracyLowerBound);
             var result2 = NewtonMethod.Evaluate(Function_15, a, b, accuracyUpperBound);
 
-            Assert.LessOrEqual(result2.Value, result1.Value);
-            Assert.GreaterOrEqual(result2.Iterations, result1.Iterations);
+            Assert.GreaterOrEqual(result2.Iterations, expectedResult);
 
             Console.WriteLine(result1);
             Console.WriteLine(result2);
