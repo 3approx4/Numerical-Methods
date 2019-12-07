@@ -34,14 +34,14 @@ namespace Numerical_Methods.Algorithms.Non_Linear
                     b + (function(a) > 0 ? -width : width) * precentage,
                     accuracy);
 
-            double result = 0;
+            float center = (a + b) / 2.0f;
 
             int iterationCount = 0;
             do
             {
                 iterationCount++;
-                float center = (a + b) / 2.0f;
-                result = function(center);
+                center = (a + b) / 2.0f;
+                var result = function(center);
                 if (function(a) * result <= 0)
                 {
                     b = center;
@@ -53,7 +53,7 @@ namespace Numerical_Methods.Algorithms.Non_Linear
 
             } while (Math.Abs(b - a) > accuracy);
 
-            return new Result(iterationCount, result);
+            return new Result(iterationCount, center);
         }
     }
 }
