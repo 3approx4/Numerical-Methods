@@ -13,7 +13,7 @@ namespace Numerical_Methods.Differential.Tasks
             var step = 0.001;
             var y0 = 1;
             var result = EulerMethod.Solve(TaskFunction, y0, b, step);
-            using (var file = File.OpenWrite("data.csv"))
+            using (var file = File.OpenWrite("data_euler.csv"))
             {
                 using (var writer = new StreamWriter(file))
                 {
@@ -21,9 +21,20 @@ namespace Numerical_Methods.Differential.Tasks
                     {
                         writer.WriteLine($"{i*step},{result[i]}");
                     }
-                }
-                
+                }                
             }
+            result = GearsMethod.Solve(TaskFunction, 3, b, y0, step);
+            using (var file = File.OpenWrite("data_gear.csv"))
+            {
+                using (var writer = new StreamWriter(file))
+                {
+                    for (int i = 0; i < result.Length; i++)
+                    {
+                        writer.WriteLine($"{i * step},{result[i]}");
+                    }
+                }
+            }
+
         }
 
         static double TestEquation(double y, double t)
