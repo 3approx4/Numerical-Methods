@@ -6,15 +6,18 @@ namespace Numerical_Methods.Algorithms.Differential
 {
     public class EulerMethod
     {
-        public static double[] Solve(DifferentialFunction function, double y0, double rightBorder, double step)
+        public static float[] Solve(DifferentialFunction function, float y0, float rightBorder, float step)
         {
             int order = (int)(rightBorder / step) + 1;
-            double[] result = new double[order];
+            float[] result = new float[order];
             result[0] = y0;
             for (int i = 1; i < order; i++)
             {
-                var y = result[i - 1];
-                result[i] = y + step * function(y, step * i);
+                float yPrev = result[i - 1];
+                float x = step * i;
+                float f = function(yPrev, x);
+                float hF = step * f;
+                result[i] = yPrev + hF;
             }
             
             return result;
@@ -25,6 +28,6 @@ namespace Numerical_Methods.Algorithms.Differential
         /// </summary>
         /// <param name="y"></param>
         /// <param name="t"></param>
-        public delegate double DifferentialFunction(double y, double t);
+        public delegate float DifferentialFunction(float y, float t);
     }
 }
